@@ -33,24 +33,45 @@ class Game {
       }),
       a: (() => {
         if (this.hero.position[0] === this.boomerang.position[0] && this.boomerang.position[1] === this.hero.position[1]) {
-          this.boomerang.moveLeft;
+          this.boomerang.moveLeft();
         }
         this.hero.moveLeft();
       }),
       w: (() => {
         if (this.hero.position[0] === this.boomerang.position[0] && this.boomerang.position[1] === this.hero.position[1]) {
-          this.boomerang.moveUp;
+          this.boomerang.moveUp();
         }
         this.hero.moveUp();
       }),
       s: (() => {
         if (this.hero.position[0] === this.boomerang.position[0] && this.boomerang.position[1] === this.hero.position[1]) {
-          this.boomerang.moveDown;
+          this.boomerang.moveDown();
         }
         this.hero.moveDown();
       }),
       c: (() => {
-        this.boomerang.moveRight();
+        let rigthCounter = 0;
+        let LeftCounter = 20;
+
+        const timerId = setInterval(() => {
+          this.boomerang.moveRight();
+          rigthCounter+= 1;
+
+          if (rigthCounter === 20 || this.boomerang.position[1] === 69) {
+            const TimerId2 = setInterval(() => {
+              this.boomerang.moveLeft();
+              LeftCounter-= 1;
+
+              if(LeftCounter === 0 ||
+                this.hero.position[1] === this.boomerang.position[1] ||
+                this.hero.position[1] === this.boomerang.position[1] + 1 ||
+                this.hero.position[1] === this.boomerang.position[1] - 1) {
+                  clearTimeout(TimerId2)
+                }
+            }, 50);
+            clearTimeout(timerId)
+          }
+        }, 50)
       }),
     };
     function runInteractiveConsole() {
